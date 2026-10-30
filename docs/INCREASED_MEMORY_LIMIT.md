@@ -153,10 +153,13 @@ after a previous granted evaluation. On-device persistence/regression testing
 must confirm existing guest and JIT settings still survive relaunches.
 
 The implementation was prepared on Windows. Portable checks passed (20 tests,
-one existing macOS-only test skipped). Native contracts, the Xcode archive, final
-signed IPA checks and device launches could not run here: no Xcode, Apple SDK,
-signing identity or connected iPhone was available. No successful iOS build or
-on-device memory increase is claimed.
+one existing macOS-only test skipped). Subsequent [macOS CI validation](https://github.com/hubzzzgr/LiveContainer-selfjit/actions/runs/41114539488)
+passed for commit `b671650`: native memory/JIT contract tests, the Xcode Release
+archive, archived host entitlement checks, both IPA packaging checks, uploads and
+the nightly release. The profile extraction test compares serialized payloads
+because XML plist dates lose fractional-second precision. These artifacts still
+require authorized signing for installation. Device launches, final provisioned
+signatures and an actual on-device memory increase remain unverified.
 
 Device validation still required:
 
