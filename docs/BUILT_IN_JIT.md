@@ -1,7 +1,7 @@
-# Built-in StikJIT (Husk Self-JIT)
+# Self JIT (Built In)
 
-Select **Settings → JIT Enabler → Built-in StikJIT (Husk Self-JIT)**, then open
-**Built-in StikJIT Setup**. This implementation uses a separate embedded
+Select **Settings → JIT Enabler → Self JIT (Built In)**, then open
+**Self JIT Setup**. This implementation uses a separate embedded
 `LCJITHelper.appex`, with StikJIT 1.9.0 compiled from source in that helper.
 
 ## Pairing and first launch
@@ -29,7 +29,7 @@ Select **Settings → JIT Enabler → Built-in StikJIT (Husk Self-JIT)**, then o
 
 A working RP file contains private credentials bound to device trust. There is
 no universal pre-created file to bundle in an IPA, and this repository does not
-include one. Import is the implemented pairing method; Husk's experimental iOS 27
+include one. Import is the implemented pairing method; experimental iOS 27
 on-device PIN enrollment is not included. A computer may be needed once to create
 the RP file, but is not part of subsequent JIT sessions. Replace the file if trust
 is reset or it stops authenticating after a device update.
@@ -46,7 +46,7 @@ Do not put a real RP file in this repository or upload it to CI.
 - Existing provider values 0–6 and the default provider are preserved; the new
   option is 7. Guest custom base64 scripts remain supported. A missing script uses
   LiveContainer's bundled `universal.js`; the existing 32-bit script policy is
-  preserved when launching from the app list. Neither Husk's allocator nor its
+  preserved when launching from the app list. No external allocator or
   fixed preallocated arena is imported.
 - Device preparation and debugger attachment are separate from guest engine
   readiness. A TXM device requires the guest's matching executable-memory protocol.
@@ -84,7 +84,7 @@ Build the existing `LiveContainer` scheme with Xcode on macOS. The host depends 
 the helper target, and both ordinary and +SideStore IPAs retain it. StikJIT's Swift
 sources and bundled arm64 `libidevice_ffi.a` are pinned in
 `ThirdParty/StikJIT.lock.json`. Compiling the sources with the selected compiler
-avoids importing Husk's Swift 6.4 binary module into Xcode 26.2. StikJIT and its FFI
+avoids importing a precompiled Swift 6.4 binary module into Xcode 26.2. StikJIT and its FFI
 are isolated in the helper, with no debugger framework dependency in the host.
 The IOKit module uses a small ABI declaration header and links through SDKROOT,
 avoiding the checkout's previous hard-coded macOS 27 SDK path. The same queries

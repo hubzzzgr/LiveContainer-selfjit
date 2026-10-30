@@ -221,9 +221,9 @@ static NSMutableSet<LCJITSession *> *sessions;
 + (BOOL)hasPairing { return ValidPairing([NSData dataWithContentsOfURL:PairingURL()]); }
 + (NSString *)unavailableReason {
 #if TARGET_OS_SIMULATOR || TARGET_OS_MACCATALYST
-    return @"Built-in StikJIT requires a physical iOS device.";
+    return @"Self JIT requires a physical iOS device.";
 #else
-    if (@available(iOS 26.0, *)) {} else { return @"Built-in StikJIT requires iOS 26 or later."; }
+    if (@available(iOS 26.0, *)) {} else { return @"Self JIT requires iOS 26 or later."; }
     if (![NSBundle bundleWithURL:[HostBundle().builtInPlugInsURL URLByAppendingPathComponent:@"LCJITHelper.appex"]].bundleIdentifier.length)
         return @"LCJITHelper is missing. Reinstall LiveContainer and choose Keep Extensions.";
     void *task = SecTaskCreateFromSelf(NULL);
@@ -263,7 +263,7 @@ static NSMutableSet<LCJITSession *> *sessions;
     dispatch_async(dispatch_get_main_queue(), ^{
         NSString *reason = self.unavailableReason;
         NSData *pairing = [NSData dataWithContentsOfURL:PairingURL()];
-        if (!reason && ![operation isEqualToString:@"resetDDI"] && !ValidPairing(pairing)) reason = @"Import your device's Remote Pairing file in Built-in StikJIT Setup first.";
+        if (!reason && ![operation isEqualToString:@"resetDDI"] && !ValidPairing(pairing)) reason = @"Import your device's Remote Pairing file in Self JIT Setup first.";
         if (reason) { completion(nil, JITError(reason)); return; }
         if (sessions.count) { completion(nil, JITError(@"A JIT helper session is still active. Close the running JIT guest before preparing or resetting its cache.")); return; }
         LCJITSession *session = [LCJITSession new];
@@ -348,7 +348,7 @@ static NSMutableSet<LCJITSession *> *sessions;
     NSString *reason = self.unavailableReason;
     if (reason) return reason;
     NSData *pairing = liveProcess ? payload[@"pairing"] : [NSData dataWithContentsOfURL:PairingURL()];
-    if (!ValidPairing(pairing)) return @"Import your device's Remote Pairing file in Built-in StikJIT Setup first.";
+    if (!ValidPairing(pairing)) return @"Import your device's Remote Pairing file in Self JIT Setup first.";
     NSString *script = intent ? intent[@"script"] : ([info[@"is32bit"] boolValue] ? nil : info[@"jitLaunchScriptJs"]);
     if (!script.length) script = [[NSData dataWithContentsOfURL:[HostBundle() URLForResource:@"universal" withExtension:@"js"]] base64EncodedStringWithOptions:0];
     NSData *source = [[NSData alloc] initWithBase64EncodedString:script ?: @"" options:0];

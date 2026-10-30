@@ -63,8 +63,19 @@ struct LCBuiltInJITSetupView: View {
             } footer: {
                 Text("Use 0 for automatic Bonjour discovery of this device’s port, falling back to 49152. If Local Network access is denied or discovery fails after a reboot, allow it in Settings or enter the current Remote Pairing port. Valid ports: 1–65535.")
             }
+            Section {
+                Text("Self JIT was inspired by Husk’s self-JIT helper architecture and is powered by StikJIT.")
+                Link(destination: URL(string: "https://github.com/Leviidev/Husk")!) {
+                    Label("Husk — Inspiration", systemImage: "lightbulb")
+                }
+                Link(destination: URL(string: "https://github.com/StikDebug/StikJIT")!) {
+                    Label("StikJIT", systemImage: "chevron.left.forwardslash.chevron.right")
+                }
+            } header: {
+                Text("Credits")
+            }
         }
-        .navigationTitle("Built-in StikJIT")
+        .navigationTitle("Self JIT Setup")
         .fileImporter(isPresented: $importing, allowedContentTypes: [.item]) { result in
             do {
                 try LCBuiltInJIT.importPairingFile(result.get())

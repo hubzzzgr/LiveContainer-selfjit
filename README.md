@@ -13,7 +13,7 @@ Crowdin Project: [![Crowdin](https://badges.crowdin.net/livecontainer/localized.
 
 # LiveContainer
 
-Built-in StikJIT (Husk Self-JIT) is available as a JIT enabler option with Remote
+Self JIT (Built In) is available as a JIT enabler option with Remote
 Pairing file import. See [setup, build details and device-validation limits](docs/BUILT_IN_JIT.md).
 
 - LiveContainer is an app launcher (not emulator or hypervisor) that allows you to run iOS apps inside it.

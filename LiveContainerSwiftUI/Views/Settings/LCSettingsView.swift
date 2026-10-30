@@ -22,7 +22,7 @@ enum JITEnablerType : Int, CaseIterable, Identifiable {
     
     var displayName: String {
         switch self {
-        case .BuiltInStikJIT: "Built-in StikJIT (Husk Self-JIT)"
+        case .BuiltInStikJIT: "Self JIT (Built In)"
         case .StikJIT: "StikDebug"
         case .StikJITLC: "StikDebug (Another LiveContainer/Multitask)"
         case .StosDebug: "StosDebug"
@@ -186,7 +186,7 @@ struct LCSettingsView: View {
                         Text("lc.settings.jitEnabler".loc)
                     }
                     if JITEnabler == .BuiltInStikJIT {
-                        NavigationLink("Built-in StikJIT Setup") {
+                        NavigationLink("Self JIT Setup") {
                             LCBuiltInJITSetupView()
                         }
                     }
@@ -307,6 +307,19 @@ struct LCSettingsView: View {
                         Image("GitHub")
                         Button("Huge_Black") {
                             openGitHub2()
+                        }
+                    }
+                    Link(destination: URL(string: "https://github.com/hubzzzgr/LiveContainer-selfjit")!) {
+                        HStack {
+                            Image("GitHub")
+                            Text("Self JIT")
+                        }
+                    }
+                    Link(destination: URL(string: "https://www.instagram.com/h.gravel_/")!) {
+                        HStack {
+                            Image(systemName: "camera")
+                                .frame(width: 24, height: 24)
+                            Text("@h.gravel_")
                         }
                     }
                 } header: {
