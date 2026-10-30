@@ -84,6 +84,13 @@ struct LCSettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                Section {
+                    NavigationLink {
+                        LCMemorySetupView()
+                    } label: {
+                        Label("Add More RAM", systemImage: "memorychip")
+                    }
+                }
                 if sharedModel.multiLCStatus != 2 {
                     Section{
                         if !certificateDataFound {

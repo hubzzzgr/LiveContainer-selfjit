@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B7D501000000000000000001 /* StosSign_API in Frameworks */ = {isa = PBXBuildFile; productRef = B7D502000000000000000001; };
+		B7D501000000000000000002 /* StosSign_Auth in Frameworks */ = {isa = PBXBuildFile; productRef = B7D502000000000000000002; };
+		B7D501000000000000000003 /* StosSign_Common in Frameworks */ = {isa = PBXBuildFile; productRef = B7D502000000000000000003; };
 		173545AF2E2C7913001B3B4C /* SideStoreSupport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 173545A82E2C7913001B3B4C /* SideStoreSupport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		17413FBC2D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 17413FB52D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		174140902D9C0E8200F3F928 /* TweakLoader.dylib in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1741403A2D9C0D0000F3F928 /* TweakLoader.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -486,6 +489,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B7D501000000000000000001 /* StosSign_API in Frameworks */,
+				B7D501000000000000000002 /* StosSign_Auth in Frameworks */,
+				B7D501000000000000000003 /* StosSign_Common in Frameworks */,
 				E1946AD83041BFF8005CBEDD /* IOKit.framework in Frameworks */,
 				E16D95752E1CD2B90068EB63 /* LiveContainerShared.framework in Frameworks */,
 				174140D62D9C176F00F3F928 /* libarchive.tbd in Frameworks */,
@@ -754,6 +760,9 @@
 			);
 			name = LiveContainerSwiftUI;
 			packageProductDependencies = (
+				B7D502000000000000000001,
+				B7D502000000000000000002,
+				B7D502000000000000000003,
 			);
 			productName = LiveContainerSwiftUI;
 			productReference = 17413FB52D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework */;
@@ -1045,6 +1054,7 @@
 			);
 			mainGroup = 17DCE9942C7067EC00731D42;
 			packageReferences = (
+				B7D503000000000000000001 /* StosSign */,
 			);
 			preferredProjectObjectVersion = 56;
 			productRefGroup = 17DCE99E2C7067EC00731D42 /* Products */;
@@ -2323,6 +2333,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B7D503000000000000000001 /* StosSign */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stossy11/StosSign";
+			requirement = {kind = revision; revision = 01dd7bc4f5084ade9e2ebbc7e338dc2e3f454d77; };
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B7D502000000000000000001 = {isa = XCSwiftPackageProductDependency; package = B7D503000000000000000001; productName = StosSign_API; };
+		B7D502000000000000000002 = {isa = XCSwiftPackageProductDependency; package = B7D503000000000000000001; productName = StosSign_Auth; };
+		B7D502000000000000000003 = {isa = XCSwiftPackageProductDependency; package = B7D503000000000000000001; productName = StosSign_Common; };
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 17DCE9952C7067EC00731D42 /* Project object */;
 }

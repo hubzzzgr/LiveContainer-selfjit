@@ -23,6 +23,39 @@ groups and SideStore signing steps are preserved.
 
 ## App IDs, provisioning and re-signing
 
+### Built-in Add More RAM setup
+
+Open **Settings → Add More RAM**, or an individual guest's **Settings → Add More
+RAM**. Sign in with the Apple account that installed LiveContainer and complete
+Apple's verification prompt. The screen automatically matches the signing team
+and exact App IDs of this installed LiveContainer and LiveProcess, then offers
+**Enable Increased Memory Limit for Guest Hosts**. It uses the additive
+`INCREASED_MEMORY_LIMIT` developer-services request used by
+[GetMoreRam](https://github.com/hugeBlack/GetMoreRam), through the pinned
+StosSign API/authentication library. No guest App ID is modified, no unrelated
+capabilities are disabled, and no certificates or App IDs are created or revoked.
+
+After Apple accepts the request, reinstall this fork's IPA using your signer,
+keeping extensions, so it generates new provisioning profiles and signatures.
+This screen does not re-sign or replace the installed app itself. Plain refresh
+may preserve a stale signature/profile; verify the installed grant afterward.
+The displayed **Current process grant** comes from the running process's security
+task, while each host's installed signature request and current available memory
+are displayed separately. App ID setup success is never treated as a runtime
+grant. Memory limits still depend on the device, OS, and process type.
+
+A real per-guest entitlement toggle is not available: guests running in the same
+host share that host's signed entitlement. The guest settings entry therefore
+opens the shared setup instead of pretending to switch the capability at runtime.
+Apple passwords, verification codes, sessions and anisette provisioning material
+are held in memory for setup and cleared on sign-out/leaving the screen. The
+configurable HTTPS Anisette v3 service receives provisioning messages, not the
+Apple password. The default service is `https://ani.sidestore.io`, as in GetMoreRam.
+Actual account login, Apple capability acceptance and post-reinstall device
+behavior require device validation; CI never logs into an Apple account.
+
+### Manual setup
+
 1. In Apple Developer **Certificates, Identifiers & Profiles**, enable the
    **Increased Memory Limit** capability for the App IDs used to sign LiveContainer
    and LiveProcess, where your account/platform supports it. LiveProcess uses
@@ -90,6 +123,12 @@ python3 scripts/verify_memory_entitlements.py --require-profile \
 Source validation works on Windows. Xcode compilation, signature inspection and
 device measurements require Apple tools/hardware; passing source checks does not
 establish that a built or installed IPA has the capability.
+
+CI also compiles/runs `tests/MemoryCapabilityContracts.swift`, which exercises the
+actual additive request payload and exact host matching before any write.
+StosSign API/Auth/Common are pinned to GetMoreRam's revision
+`01dd7bc4f5084ade9e2ebbc7e338dc2e3f454d77` and linked only into the UI framework;
+StosSign's signing engine is not used to replace the existing guest signer/JIT flow.
 
 References: [Apple entitlement reference](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.developer.kernel.increased-memory-limit),
 [available process memory](https://developer.apple.com/documentation/os/os_proc_available_memory),

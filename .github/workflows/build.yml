@@ -39,6 +39,10 @@ jobs:
         run: |
           xcrun clang -fobjc-arc -fblocks -fmodules -framework Foundation -framework Security tests/BuiltInJITContracts.m -o "$RUNNER_TEMP/lc-jit-contract-tests"
           "$RUNNER_TEMP/lc-jit-contract-tests"
+      - name: Test memory capability request contracts
+        run: |
+          xcrun swiftc LiveContainerSwiftUI/Utilities/LCMemoryCapabilityRequest.swift tests/MemoryCapabilityContracts.swift -o "$RUNNER_TEMP/lc-memory-contract-tests"
+          "$RUNNER_TEMP/lc-memory-contract-tests"
       - name: Set Scheme
         id: scheme
         run: |
