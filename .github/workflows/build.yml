@@ -66,7 +66,14 @@ jobs:
           scheme: ${{ steps.scheme.outputs.scheme }}
           filetype_parameter: ${{ steps.filetype_parameter.outputs.filetype_parameter }}
           file_to_build: ${{ steps.file_to_build.outputs.file_to_build }}
-        run: xcodebuild archive -archivePath "$archive_path" -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -sdk iphoneos -arch arm64 -configuration Release | xcpretty && exit ${PIPESTATUS[0]}
+        run: |
+          set +e
+          xcodebuild archive -archivePath "$archive_path" -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -sdk iphoneos -arch arm64 -configuration Release | tee "$RUNNER_TEMP/xcodebuild.log" | xcpretty
+          build_status=${PIPESTATUS[0]}
+          if [ "$build_status" -ne 0 ]; then
+            tail -n 150 "$RUNNER_TEMP/xcodebuild.log"
+          fi
+          exit "$build_status"
       - name: Validate archived JIT helper
         run: python3 scripts/verify_builtin_jit.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
       - name: Tar Build Artifact

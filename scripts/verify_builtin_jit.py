@@ -105,7 +105,10 @@ def verify_sources(root=ROOT):
     require('-hidden-lidevice_ffi' in settings, 'Missing helper FFI linkage')
     require('CODE_SIGN_ENTITLEMENTS = LCJITHelper/LCJITHelper.entitlements' in settings,
             'Missing helper signing configuration')
-    require(plistlib.loads((root / 'LCJITHelper/LCJITHelper.entitlements').read_bytes()) == {},
+    require(plistlib.loads((root / 'LCJITHelper/LCJITHelper.entitlements').read_bytes()) == {
+        'application-identifier': '$(DEVELOPMENT_TEAM).$(PRODUCT_BUNDLE_IDENTIFIER)',
+        'com.apple.developer.team-identifier': '$(DEVELOPMENT_TEAM)',
+    },
             'Unexpected helper entitlements')
     enum = (root / 'LiveContainerSwiftUI/Views/Settings/LCSettingsView.swift').read_text()
     for name, raw in [('SideJITServer', 0), ('StikJIT', 1), ('JITStreamerEBLegacy', 2), ('StikJITLC', 3),
