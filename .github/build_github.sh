@@ -80,3 +80,4 @@ zip -r "$scheme+SideStore.ipa" "Payload" -x "._*" -x ".DS_Store" -x "__MACOSX"
 
 # Both distributions must preserve the helper after the SideStore transformation.
 python3 scripts/verify_builtin_jit.py --ipa "$scheme.ipa" --ipa "$scheme+SideStore.ipa" || exit 1
+python3 scripts/verify_memory_limit.py --ipa "$scheme.ipa" --ipa "$scheme+SideStore.ipa" || exit 1

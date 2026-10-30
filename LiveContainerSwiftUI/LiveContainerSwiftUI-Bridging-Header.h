@@ -9,6 +9,7 @@
 #include "LCAppInfo.h"
 #include "../LiveContainer/LCSharedUtils.h"
 #include "../LiveContainer/LCBuiltInJIT.h"
+#include "../LiveContainer/LCMemoryDiagnostics.h"
 #include "Utilities/LCUtils.h"
 #include "Utilities/unarchive.h"
 #include "../MultitaskSupport/AppSceneViewController.h"
