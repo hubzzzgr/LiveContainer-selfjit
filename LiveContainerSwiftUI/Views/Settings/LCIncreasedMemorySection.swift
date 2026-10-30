@@ -17,6 +17,9 @@ struct LCIncreasedMemorySection: View {
 
     var body: some View {
         Section {
+            NavigationLink("Set Up Increased Memory Limit") {
+                LCMemorySetupView()
+            }
             HStack {
                 Text("Entitlement Status")
                 Spacer()

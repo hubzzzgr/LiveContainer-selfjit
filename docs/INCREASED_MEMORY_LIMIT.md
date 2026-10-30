@@ -24,9 +24,28 @@ rules out genuine per-guest entitlement switches within a single host task.
 uses StosSign to request the Developer Services capability `INCREASED_MEMORY_LIMIT`
 for an App ID. Its [instructions](https://github.com/hugeBlack/GetMoreRam#how-to-use)
 then require reinstalling the target through SideStore/AltStore. This is a
-provisioning step, not an in-process memory-limit switch. Its external setup
-approach can be used with this fork; this implementation does not import its
-authentication stack, store Apple ID credentials, or add dependencies.
+provisioning step, not an in-process memory-limit switch. Settings now includes
+this setup flow directly, using pinned StosSign authentication/API dependencies.
+Passwords, sessions and anisette provisioning material stay in memory for the
+setup screen and are cleared when leaving it. Only the anisette server preference
+is persisted. No Apple account credentials are saved by this implementation.
+
+## Built-in setup
+
+Open Settings → Increased Memory Limit → **Set Up Increased Memory Limit**.
+Sign in with the Apple account that installed LiveContainer, complete Apple's
+verification-code prompt, then tap **Request Increased Memory Limit**. The screen
+shows the exact installed host identifiers. It matches the signing team and
+resolves every host App ID before sending any capability updates; it never
+updates an imported guest App ID. Partial failures identify which host request
+was accepted. Canceling cannot undo a request already accepted by Apple.
+
+The built-in helper requests the capability for LiveContainer and its installed
+LiveProcess extension. Reinstall through the same signer to generate updated
+profiles and signatures, then relaunch and refresh the diagnostics. The request
+does not change the running entitlement or assert that additional RAM was granted.
+No separate GetMoreRam app is required. Account authentication, Apple capability
+approval and final profile installation still require on-device validation.
 
 ## What is requested
 
