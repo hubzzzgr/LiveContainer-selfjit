@@ -309,23 +309,32 @@ struct LCSettingsView: View {
                             openGitHub2()
                         }
                     }
-                    Link(destination: URL(string: "https://github.com/hubzzzgr/LiveContainer-selfjit")!) {
-                        HStack {
-                            Image("GitHub")
-                            Text("Self JIT")
-                        }
-                    }
-                    Link(destination: URL(string: "https://www.instagram.com/h.gravel_/")!) {
-                        HStack {
-                            Image(systemName: "camera")
-                                .frame(width: 24, height: 24)
-                            Text("@h.gravel_")
-                        }
-                    }
                 } header: {
                     Text("lc.settings.about".loc)
                 } footer: {
                     Text("lc.settings.warning".loc)
+                }
+
+                Section {
+                    Link(destination: URL(string: "https://github.com/hubzzzgr/LiveContainer-selfjit")!) {
+                        HStack {
+                            Image("GitHub")
+                            Text("hubzzzgr/LiveContainer-selfjit")
+                        }
+                    }
+                    Link(destination: URL(string: "https://www.instagram.com/h.gravel_/")!) {
+                        HStack {
+                            Image("Instagram")
+                                .renderingMode(.original)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 29, height: 29)
+                                .clipShape(Circle())
+                            Text("@h.gravel_")
+                        }
+                    }
+                } header: {
+                    Text("Self JIT")
                 }
                 
                 VStack{
