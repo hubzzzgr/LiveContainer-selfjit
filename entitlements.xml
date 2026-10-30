@@ -12,7 +12,6 @@
 	</array>
 	<key>com.apple.developer.healthkit.background-delivery</key>
 	<true/>
-	<!-- Guest host capability; the signing App ID and profile must also allow it. -->
 	<key>com.apple.developer.kernel.increased-memory-limit</key>
 	<true/>
 	<key>com.apple.developer.team-identifier</key>

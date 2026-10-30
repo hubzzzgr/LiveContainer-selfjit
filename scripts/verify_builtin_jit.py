@@ -79,8 +79,7 @@ def verify_sources(root=ROOT):
     shared = targets['LiveContainerShared']
 
     def memberships(target, phase_type):
-        return [(objects[objects[entry]['fileRef']]['path'] if 'fileRef' in objects[entry]
-                 else objects[objects[entry]['productRef']]['productName'])
+        return [objects[objects[entry]['fileRef']]['path']
                 for phase in target['buildPhases'] if objects[phase]['isa'] == phase_type
                 for entry in objects[phase]['files']]
 

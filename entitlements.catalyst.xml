@@ -6,7 +6,6 @@
 	<string>AAAAA11111.com.kdt.livecontainer</string>
 	<key>com.apple.developer.kernel.extended-virtual-addressing</key>
 	<true/>
-	<!-- Preserve the existing request; OS support determines its effect. -->
 	<key>com.apple.developer.kernel.increased-memory-limit</key>
 	<true/>
 	<key>com.apple.security.application-groups</key>

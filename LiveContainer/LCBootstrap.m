@@ -16,10 +16,6 @@
 #include <signal.h>
 #include <sys/mman.h>
 #include <stdlib.h>
-#include <TargetConditionals.h>
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST && !TARGET_OS_SIMULATOR
-#include <os/proc.h>
-#endif
 #include "../litehook/src/litehook.h"
 #import "Tweaks/Tweaks.h"
 #include <mach-o/ldsyms.h>
@@ -682,14 +678,6 @@ int LiveContainerMain(int argc, char *argv[]) {
     lcAppUrlScheme = NSBundle.mainBundle.infoDictionary[@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
     lcAppGroupPath = [[NSFileManager.defaultManager containerURLForSecurityApplicationGroupIdentifier:[NSClassFromString(@"LCSharedUtils") appGroupID]] path];
     isLiveProcess = [lcAppUrlScheme isEqualToString:@"liveprocess"];
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST && !TARGET_OS_SIMULATOR
-    // Remaining process headroom, not total RAM or proof of an entitlement grant.
-    // Both guest hosts pass here before guest loading changes the main bundle.
-    size_t availableMemory = os_proc_available_memory();
-    NSLog(@"[LCMemory] %@ pid=%d: os_proc_available_memory()=%zu bytes (%.1f MiB available)",
-          isLiveProcess ? @"LiveProcess" : @"LiveContainer", getpid(),
-          availableMemory, (double)availableMemory / (1024.0 * 1024.0));
-#endif
     setenv("LC_HOME_PATH", getenv("HOME"), 0);
 
     NSString *selectedApp = [lcUserDefaults stringForKey:@"selected"];

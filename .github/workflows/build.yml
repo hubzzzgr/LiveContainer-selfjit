@@ -33,16 +33,11 @@ jobs:
       - name: Validate built-in JIT sources and product checks
         run: |
           python3 scripts/verify_builtin_jit.py
-          python3 scripts/verify_memory_entitlements.py
           python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: Test native pairing and launch intent contracts
         run: |
           xcrun clang -fobjc-arc -fblocks -fmodules -framework Foundation -framework Security tests/BuiltInJITContracts.m -o "$RUNNER_TEMP/lc-jit-contract-tests"
           "$RUNNER_TEMP/lc-jit-contract-tests"
-      - name: Test memory capability request contracts
-        run: |
-          xcrun swiftc LiveContainerSwiftUI/Utilities/LCMemoryCapabilityRequest.swift tests/MemoryCapabilityContracts.swift -o "$RUNNER_TEMP/lc-memory-contract-tests"
-          "$RUNNER_TEMP/lc-memory-contract-tests"
       - name: Set Scheme
         id: scheme
         run: |
@@ -81,8 +76,6 @@ jobs:
           exit "$build_status"
       - name: Validate archived JIT helper
         run: python3 scripts/verify_builtin_jit.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
-      - name: Validate archived memory entitlements
-        run: python3 scripts/verify_memory_entitlements.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
       - name: Tar Build Artifact
         run: tar -cvf "$archive_path.xcarchive.tar" "$archive_path.xcarchive"
       - name: Upload a Build Artifact

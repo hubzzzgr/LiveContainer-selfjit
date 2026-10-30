@@ -17,7 +17,6 @@
 	</array>
 	<key>get-task-allow</key>
 	<true/>
-	<!-- LiveProcess hosts guests in its own process and needs its own profile grant. -->
 	<key>com.apple.developer.kernel.increased-memory-limit</key>
 	<true/>
 	<key>keychain-access-groups</key>

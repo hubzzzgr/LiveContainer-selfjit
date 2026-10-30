@@ -217,16 +217,6 @@ struct LCAppSettingsView: View {
             }
 
             Section {
-                NavigationLink {
-                    LCMemorySetupView()
-                } label: {
-                    Label("Add More RAM", systemImage: "memorychip")
-                }
-            } footer: {
-                Text("Set up Increased Memory Limit on LiveContainer's Apple App IDs. The grant is shared by guests and requires re-signing and reinstalling; it cannot be toggled for one running guest.")
-            }
-
-            Section {
                 Toggle(isOn: $model.uiIsLocked) {
                     Text("lc.appSettings.lockApp".loc)
                 }

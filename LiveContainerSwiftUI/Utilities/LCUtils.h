@@ -46,8 +46,6 @@ uint32_t dyld_get_sdk_version(const struct mach_header* mh);
 + (NSString *)storeInstallURLScheme;
 + (NSString *)getVersionInfo;
 + (NSString *)liveProcessBundleIdentifier;
-+ (NSNumber * _Nullable)availableProcessMemory;
-+ (NSNumber * _Nullable)increasedMemoryEntitlement;
 + (NSData*)bookmarkForURL:(NSURL*) url;
 @end
 

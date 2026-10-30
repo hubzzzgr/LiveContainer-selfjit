@@ -11,10 +11,6 @@
 #import "../../MultitaskSupport/DecoratedAppSceneViewController.h"
 #import "../../ZSign/zsigner.h"
 #import "LiveContainerSwiftUI-Swift.h"
-#include <TargetConditionals.h>
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST && !TARGET_OS_SIMULATOR
-#include <os/proc.h>
-#endif
 
 // make SFSafariView happy and open data: URLs
 @implementation NSURL(hack)
@@ -25,29 +21,6 @@
 @end
 
 @implementation LCUtils
-+ (NSNumber *)availableProcessMemory {
-#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST && !TARGET_OS_SIMULATOR
-    return @(os_proc_available_memory());
-#else
-    return nil;
-#endif
-}
-
-+ (NSNumber *)increasedMemoryEntitlement {
-    void *task = SecTaskCreateFromSelf(NULL);
-    if (!task) return nil;
-    CFErrorRef error = NULL;
-    CFTypeRef value = SecTaskCopyValueForEntitlement(task, CFSTR("com.apple.developer.kernel.increased-memory-limit"), &error);
-    CFRelease(task);
-    NSNumber *result = nil;
-    if (!error) {
-        result = @(value && CFGetTypeID(value) == CFBooleanGetTypeID() && CFBooleanGetValue(value));
-    }
-    if (value) CFRelease(value);
-    if (error) CFRelease(error);
-    return result;
-}
-
 #pragma mark Certificate & password
 
 + (NSData *)certificateData {

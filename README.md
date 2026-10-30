@@ -16,9 +16,6 @@ Crowdin Project: [![Crowdin](https://badges.crowdin.net/livecontainer/localized.
 Self JIT (Built In) is available as a JIT enabler option with Remote
 Pairing file import. See [setup, build details and device-validation limits](docs/BUILT_IN_JIT.md).
 
-Increased Memory Limit is requested for both guest hosts. See
-[provisioning requirements, runtime memory diagnostics and IPA verification](docs/INCREASED_MEMORY_LIMIT.md).
-
 - LiveContainer is an app launcher (not emulator or hypervisor) that allows you to run iOS apps inside it.
 - Allows you to install unlimited apps (3 app/10 app id free developer account limit does not apply here) with only one app & app id. You can also have multiple versions of an app installed with multiple data containers.
 - (Below iOS 26) When JIT is available, codesign is entirely bypassed, no need to sign your apps before installing. Otherwise, your app will be signed with the same certificate used by LiveContainer.
