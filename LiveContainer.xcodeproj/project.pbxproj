@@ -48,7 +48,7 @@
 		0EA675B8A45D75088C9A9480 /* Helper legacy.js in Resources */ = {isa = PBXBuildFile; fileRef = 7F74E93323F37345E889E9AB /* Helper legacy.js */; };
 		83589823551CB25D06809A70 /* Helper universal.js in Resources */ = {isa = PBXBuildFile; fileRef = F2EADEB2AD316F4D50630712 /* Helper universal.js */; };
 		99B7F99D00412CED3CAA1922 /* LCBuiltInJIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 441608DAF847462A43D44B49 /* LCBuiltInJIT.m */; };
-		6489AAE89C2237A3A95DD3C8 /* LCJITHelper.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 27692A6D136EB83526D6301B /* LCJITHelper.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6489AAE89C2237A3A95DD3C8 /* LCJITHelper.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 27692A6D136EB83526D6301B /* LCJITHelper.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		07DFF314CE5976055F8A77CB /* BuiltInJITNotices in Resources */ = {isa = PBXBuildFile; fileRef = 75CF52838063047EA410CBF8 /* BuiltInJITNotices */; };
 /* End PBXBuildFile section */
 

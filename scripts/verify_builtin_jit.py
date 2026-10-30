@@ -89,6 +89,12 @@ def verify_sources(root=ROOT):
     require('LCJITHelper/LCJITHelper.swift' in helper_sources, 'Helper handler is not compiled')
     require('LiveContainer/LCBuiltInJIT.m' in memberships(shared, 'PBXSourcesBuildPhase'), 'Shared bootstrap client is not compiled')
     require('LCJITHelper.appex' in memberships(host, 'PBXCopyFilesBuildPhase'), 'Helper is not embedded')
+    helper_copies = [objects[entry] for phase in host['buildPhases']
+                     if objects[phase]['isa'] == 'PBXCopyFilesBuildPhase'
+                     for entry in objects[phase]['files']
+                     if objects[objects[entry]['fileRef']]['path'] == 'LCJITHelper.appex']
+    require(all('CodeSignOnCopy' in entry.get('settings', {}).get('ATTRIBUTES', []) for entry in helper_copies),
+            'Embedded helper must be signed with the host identity')
     require('Resources/BuiltInJITNotices' in memberships(host, 'PBXResourcesBuildPhase'), 'License notices are not packaged')
     require(any(objects[dep]['target'] == next(key for key, obj in objects.items() if obj is helper)
                 for dep in host['dependencies']), 'Missing host/helper build dependency')
