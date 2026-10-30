@@ -121,7 +121,10 @@ int main(void) {
         NSData *profileXML = [NSPropertyListSerialization dataWithPropertyList:profile format:NSPropertyListXMLFormat_v1_0 options:0 error:NULL];
         NSMutableData *wrapped = [[@"CMS-prefix" dataUsingEncoding:NSUTF8StringEncoding] mutableCopy];
         [wrapped appendData:profileXML]; [wrapped appendData:[@"CMS-suffix" dataUsingEncoding:NSUTF8StringEncoding]];
-        Expect([MemoryProfile(wrapped) isEqual:profile], @"CMS payload extraction failed");
+        // XML plists serialize NSDate at whole-second precision. Compare with the
+        // serialized payload, not the original dictionary's fractional timestamp.
+        NSDictionary *serializedProfile = [NSPropertyListSerialization propertyListWithData:profileXML options:NSPropertyListImmutable format:NULL error:NULL];
+        Expect([MemoryProfile(wrapped) isEqual:serializedProfile], @"CMS payload extraction failed");
         Expect(MemoryProfile([@"broken" dataUsingEncoding:NSUTF8StringEncoding]) == nil, @"Malformed profile accepted");
         profile[@"ExpirationDate"] = [now dateByAddingTimeInterval:-1];
         Expect([MemoryProfileEvidence(profile, identity, now)[@"issues"] count] > 0, @"Expired profile accepted");
