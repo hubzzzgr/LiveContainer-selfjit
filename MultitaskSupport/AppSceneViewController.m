@@ -11,6 +11,7 @@
 #import "PiPManager.h"
 #import "Localization.h"
 #import "LCSharedUtils.h"
+#import "../LiveContainer/LCBuiltInJIT.h"
 #import "utils.h"
 #import "UIKitPrivate+MultitaskSupport.h"
 
@@ -64,6 +65,14 @@
         @"bookmarks": bookmarks,
         @"lcHomePath": NSHomeDirectory(),
     }.mutableCopy;
+
+    NSError *jitError = nil;
+    NSDictionary *jitPayload = [LCBuiltInJIT payloadForGuest:_bundleId container:_dataUUID error:&jitError];
+    if (jitError) {
+        [delegate appSceneVC:self didInitializeWithError:jitError];
+        return nil;
+    }
+    if (jitPayload) userInfo[@"LCBuiltInJIT"] = jitPayload;
     
     NSString* launchAppUrlScheme = [NSUserDefaults.standardUserDefaults stringForKey:@"launchAppUrlScheme"];
     [NSUserDefaults.lcUserDefaults removeObjectForKey:@"launchAppUrlScheme"];

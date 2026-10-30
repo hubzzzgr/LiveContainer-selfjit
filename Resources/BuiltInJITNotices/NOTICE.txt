@@ -1,0 +1,25 @@
+Built-in StikJIT for LiveContainer
+
+StikJIT 1.9.0, MPL-2.0, https://github.com/StikDebug/StikJIT
+Corresponding source: revision 32287268fa5824f9edce4cb359f5833ce0cf7b00
+https://github.com/StikDebug/StikJIT/tree/32287268fa5824f9edce4cb359f5833ce0cf7b00
+Included in LiveContainer's source tree under ThirdParty/StikJIT.
+LiveContainer modifies ScriptRunner.swift to report a successful debugger attach
+through a typed callback and abort JavaScript on debugger I/O errors. The original
+license remains in effect for that file.
+The Swift sources are compiled into LCJITHelper with LiveContainer's compiler;
+Husk's Swift 6.4 XCFramework is not redistributed.
+
+StikJIT includes idevice's iOS FFI archive (MIT). Its archive SHA-256 is recorded
+in ThirdParty/StikJIT.lock.json. idevice source: https://github.com/jkcoxson/idevice
+The bundled MIT license and Rust dependency license collection accompany this
+notice. The dependency license collection is supplied conservatively from Husk's
+idevice pairing build; it is not a verified SBOM of StikJIT's prebuilt FFI archive.
+Upstream StikJIT does not identify that archive's exact Rust source revision.
+
+The helper/extension architecture was informed by Husk (GPL-2.0-or-later),
+https://github.com/Leviidev/Husk, revision 645c22aa92ebcf34c84d9ad0ac6cdd701c667f53.
+Husk's engine, allocator and pairing library are not included.
+
+LiveContainer licensing remains as described in the source repository's LICENSE.
+No device pairing credentials are distributed with this application.

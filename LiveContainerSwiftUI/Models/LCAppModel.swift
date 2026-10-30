@@ -339,7 +339,42 @@ class LCAppModel: ObservableObject, Hashable {
 #if targetEnvironment(simulator)
         jitNeeded = false
 #endif
-        if jitNeeded {
+        if LCBuiltInJIT.selected && !jitNeeded {
+            // Preserve an explicit forceJIT=false override across the native bootstrap as well.
+            LCBuiltInJIT.stage(guest: bundleIdOverride ?? appInfo.relativeBundlePath!,
+                               container: uiSelectedContainer?.folderName, script: nil, enabled: false)
+        }
+        if LCBuiltInJIT.selected && jitNeeded {
+            let selectedGuest = bundleIdOverride ?? appInfo.relativeBundlePath!
+            do {
+                try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                    LCBuiltInJIT.prepare { _, error in
+                        if let error { continuation.resume(throwing: error) }
+                        else { continuation.resume() }
+                    }
+                }
+                try Task.checkCancellation()
+                guard LCBuiltInJIT.selected else {
+                    throw "The JIT enabler changed during preparation. Launch the guest again."
+                }
+            } catch {
+                if UserDefaults.standard.string(forKey: "selected") == selectedGuest {
+                    UserDefaults.standard.removeObject(forKey: "selected")
+                    UserDefaults.standard.removeObject(forKey: "selectedContainer")
+                }
+                throw error
+            }
+            // Stage only after preparation, so the one-shot intent survives the restart without expiring during a download.
+            UserDefaults.standard.set(selectedGuest, forKey: "selected")
+            UserDefaults.standard.set(uiSelectedContainer?.folderName, forKey: "selectedContainer")
+            LCBuiltInJIT.stage(guest: selectedGuest, container: uiSelectedContainer?.folderName,
+                               script: jitLaunchScriptJs, enabled: jitNeeded)
+            if multitask, #available(iOS 16.0, *) {
+                try await LCUtils.launchMultitaskGuestApp(appInfo.displayName())
+            } else {
+                LCSharedUtils.launchToGuestApp(withClassicMode: classicMode)
+            }
+        } else if jitNeeded {
             if multitask, #available(iOS 17.4, *) {
                 try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                     LCUtils.launchMultitaskGuestApp(appInfo.displayName()) { pidNumber, error in

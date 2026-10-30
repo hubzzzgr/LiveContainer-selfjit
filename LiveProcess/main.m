@@ -17,6 +17,7 @@
 @implementation LiveProcessHandler
 static NSExtensionContext *extensionContext;
 static NSDictionary *retrievedAppInfo;
+static NSDictionary *builtInJITPayload;
 + (NSExtensionContext *)extensionContext {
     return extensionContext;
 }
@@ -25,9 +26,20 @@ static NSDictionary *retrievedAppInfo;
     return retrievedAppInfo;
 }
 
++ (NSDictionary *)takeBuiltInJITPayload {
+    NSDictionary *payload = builtInJITPayload;
+    builtInJITPayload = nil;
+    return payload;
+}
+
 - (void)beginRequestWithExtensionContext:(NSExtensionContext *)context {
     extensionContext = context;
-    retrievedAppInfo = [context.inputItems.firstObject userInfo];
+    NSExtensionItem *item = context.inputItems.firstObject;
+    NSMutableDictionary *info = [item.userInfo mutableCopy];
+    builtInJITPayload = info[@"LCBuiltInJIT"];
+    [info removeObjectForKey:@"LCBuiltInJIT"];
+    retrievedAppInfo = info;
+    item.userInfo = info;
     // Return control to LiveContainerMain
     CFRunLoopStop(CFRunLoopGetMain());
 }
@@ -54,7 +66,8 @@ int LiveProcessMain(int argc, char *argv[]) {
         return payloadEntry(argc, argv, _envp, _apple);
     }
     
-    NSLog(@"Retrieved app info: %@", appInfo);
+    // appInfo can contain private Remote Pairing credentials for the built-in JIT helper.
+    NSLog(@"Retrieved LiveProcess launch request");
     // Set LiveContainer's home path
     setenv("LP_HOME_PATH", getenv("HOME"), 1);
     const char *overrideHomePath = [appInfo[@"lcHomePath"] fileSystemRepresentation];

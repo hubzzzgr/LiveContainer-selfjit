@@ -33,6 +33,23 @@
 		E16D95742E1CD2980068EB63 /* LCMachOUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E16D94DE2E1CC8200068EB63 /* LCMachOUtils.m */; };
 		E16D95752E1CD2B90068EB63 /* LiveContainerShared.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1292BD62DCA3B660065E12D /* LiveContainerShared.framework */; };
 		E1946AD83041BFF8005CBEDD /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1946AD63041BFDD005CBEDD /* IOKit.framework */; };
+		9872CDF775AE919451B4BB29 /* LCJITHelper.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 7135F4452A730204CA762F3E /* LCJITHelper.swift */; };
+		C2B75B1009A427C42C5F8B87 /* BundledScript.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = D0C71C61F4C97AC2E0DEFA36 /* BundledScript.swift */; };
+		FF606806D12AC460D4C584D9 /* DDISession.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 1A16022195B1168625FEACC5 /* DDISession.swift */; };
+		629C28110FB2A952EA049DA9 /* DeveloperDiskImageService.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 353594000CD5112CDA9CF4F7 /* DeveloperDiskImageService.swift */; };
+		2558235CF7592756CBCEB226 /* EndpointProbe.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 54478261025203DEF161308C /* EndpointProbe.swift */; };
+		89B62DE335198F20395BEA06 /* IdeviceFFI.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = E82F5123696A05016FD2D6FD /* IdeviceFFI.swift */; };
+		7E5893405EA255F49A604F80 /* JITSession.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 69A80FF52F4FF3C2442726B5 /* JITSession.swift */; };
+		0A1D1DCC3EC559B84BD8E7C6 /* ProcessInfo+TXM.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = A481D9B96DE7C0E1B371BA95 /* ProcessInfo+TXM.swift */; };
+		1C397107BB06B025F1F2975C /* ScriptRunner.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = C288585563B0295E4DC328A8 /* ScriptRunner.swift */; };
+		C70DFFE3F083DC40B99B7416 /* StikJIT.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = F9ABB29A746E04B5962E66D4 /* StikJIT.swift */; };
+		6115A8423842960569C0C35D /* StikJITError.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 86414734398E0E3F9EBC02E4 /* StikJITError.swift */; };
+		139556473CC59457F8BDF918 /* SynchronousDDIDownloader.swift in Helper Sources */ = {isa = PBXBuildFile; fileRef = 8FAC13B9C685251C9D2A2EB2 /* SynchronousDDIDownloader.swift */; };
+		0EA675B8A45D75088C9A9480 /* Helper legacy.js in Resources */ = {isa = PBXBuildFile; fileRef = 7F74E93323F37345E889E9AB /* Helper legacy.js */; };
+		83589823551CB25D06809A70 /* Helper universal.js in Resources */ = {isa = PBXBuildFile; fileRef = F2EADEB2AD316F4D50630712 /* Helper universal.js */; };
+		99B7F99D00412CED3CAA1922 /* LCBuiltInJIT.m in Sources */ = {isa = PBXBuildFile; fileRef = 441608DAF847462A43D44B49 /* LCBuiltInJIT.m */; };
+		6489AAE89C2237A3A95DD3C8 /* LCJITHelper.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 27692A6D136EB83526D6301B /* LCJITHelper.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		07DFF314CE5976055F8A77CB /* BuiltInJITNotices in Resources */ = {isa = PBXBuildFile; fileRef = 75CF52838063047EA410CBF8 /* BuiltInJITNotices */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +116,13 @@
 			remoteGlobalIDString = E1292BD52DCA3B660065E12D;
 			remoteInfo = LiveContainerShared;
 		};
+		76F7E552D93E5E3BC7B3E287 /* Helper Proxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17DCE9952C7067EC00731D42;
+			proxyType = 1;
+			remoteGlobalIDString = F5BC205E079435EB53F1F30D;
+			remoteInfo = LCJITHelper;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -145,6 +169,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				6489AAE89C2237A3A95DD3C8 /* LCJITHelper.appex in Embed Foundation Extensions */,
 				17E23DE92F443A9300C55733 /* ShareExtension.appex in Embed Foundation Extensions */,
 				17CAED2C2F234814008B1977 /* LaunchAppExtension.appex in Embed Foundation Extensions */,
 				E1292AF32DCA3A660065E12D /* LiveProcess.appex in Embed Foundation Extensions */,
@@ -185,7 +210,128 @@
 		E16D94DE2E1CC8200068EB63 /* LCMachOUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LCMachOUtils.m; sourceTree = "<group>"; };
 		E16D95762E1CD49E0068EB63 /* LCMachOUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCMachOUtils.h; sourceTree = "<group>"; };
 		E16D9BA02E1D48DE0068EB63 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		E1946AD63041BFDD005CBEDD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
+		E1946AD63041BFDD005CBEDD /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		7135F4452A730204CA762F3E /* LCJITHelper.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "LCJITHelper/LCJITHelper.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		D0C71C61F4C97AC2E0DEFA36 /* BundledScript.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/BundledScript.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		1A16022195B1168625FEACC5 /* DDISession.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/DDISession.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		353594000CD5112CDA9CF4F7 /* DeveloperDiskImageService.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/DeveloperDiskImageService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		54478261025203DEF161308C /* EndpointProbe.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/EndpointProbe.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		E82F5123696A05016FD2D6FD /* IdeviceFFI.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/IdeviceFFI.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		69A80FF52F4FF3C2442726B5 /* JITSession.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/JITSession.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		A481D9B96DE7C0E1B371BA95 /* ProcessInfo+TXM.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/ProcessInfo+TXM.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		C288585563B0295E4DC328A8 /* ScriptRunner.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/ScriptRunner.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		F9ABB29A746E04B5962E66D4 /* StikJIT.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/StikJIT.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		86414734398E0E3F9EBC02E4 /* StikJITError.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/StikJITError.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		8FAC13B9C685251C9D2A2EB2 /* SynchronousDDIDownloader.swift */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "ThirdParty/StikJIT/Sources/SynchronousDDIDownloader.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		7F74E93323F37345E889E9AB /* Helper legacy.js */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.javascript;
+			path = "ThirdParty/StikJIT/Resources/legacy.js";
+			sourceTree = SOURCE_ROOT;
+		};
+		F2EADEB2AD316F4D50630712 /* Helper universal.js */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.javascript;
+			path = "ThirdParty/StikJIT/Resources/universal.js";
+			sourceTree = SOURCE_ROOT;
+		};
+		AA59629C5E685A583820E955 /* Helper Info.plist */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.xml;
+			path = "LCJITHelper/Info.plist";
+			sourceTree = SOURCE_ROOT;
+		};
+		7EFA6B1E96A71BE18887454D /* Helper LCJITHelper-Bridging-Header.h */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "LCJITHelper/LCJITHelper-Bridging-Header.h";
+			sourceTree = SOURCE_ROOT;
+		};
+		441608DAF847462A43D44B49 /* LCBuiltInJIT.m */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "LiveContainer/LCBuiltInJIT.m";
+			sourceTree = SOURCE_ROOT;
+		};
+		FD422A08E178A03FF84CEA98 /* LCBuiltInJIT.h */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "LiveContainer/LCBuiltInJIT.h";
+			sourceTree = SOURCE_ROOT;
+		};
+		27692A6D136EB83526D6301B /* LCJITHelper.appex */ = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.app-extension";
+			includeInIndex = 0;
+			path = LCJITHelper.appex;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		75CF52838063047EA410CBF8 /* BuiltInJITNotices */ = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder;
+			path = "Resources/BuiltInJITNotices";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -406,12 +552,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AF1E2DC7E628C18720CDB729 /* Helper Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		172CA85F2D9D721700CF6989 /* LiveContainer */ = {
 			isa = PBXGroup;
 			children = (
+				FD422A08E178A03FF84CEA98 /* LCBuiltInJIT.h */,
+				441608DAF847462A43D44B49 /* LCBuiltInJIT.m */,
 				E16D95762E1CD49E0068EB63 /* LCMachOUtils.h */,
 				E1292C032DCA3C160065E12D /* main.c */,
 				E1292C1A2DCA48F00065E12D /* Tweaks */,
@@ -446,6 +601,7 @@
 		17DCE9942C7067EC00731D42 = {
 			isa = PBXGroup;
 			children = (
+				107545EE31555671BE35113D /* LCJITHelper */,
 				E16D9BA02E1D48DE0068EB63 /* README.md */,
 				17B0F8452DE16FE4008110EA /* xcconfigs */,
 				E1292C242DCA4E6F0065E12D /* MultitaskSupport */,
@@ -469,6 +625,7 @@
 		17DCE99E2C7067EC00731D42 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				27692A6D136EB83526D6301B /* LCJITHelper.appex */,
 				17DCE99D2C7067EC00731D42 /* LiveContainer.app */,
 				17413FB52D9C0BAE00F3F928 /* LiveContainerSwiftUI.framework */,
 				1741403A2D9C0D0000F3F928 /* TweakLoader.dylib */,
@@ -481,6 +638,30 @@
 				17E23DDF2F443A9300C55733 /* ShareExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		107545EE31555671BE35113D /* LCJITHelper */ = {
+			isa = PBXGroup;
+			children = (
+				7135F4452A730204CA762F3E /* LCJITHelper.swift */,
+				D0C71C61F4C97AC2E0DEFA36 /* BundledScript.swift */,
+				1A16022195B1168625FEACC5 /* DDISession.swift */,
+				353594000CD5112CDA9CF4F7 /* DeveloperDiskImageService.swift */,
+				54478261025203DEF161308C /* EndpointProbe.swift */,
+				E82F5123696A05016FD2D6FD /* IdeviceFFI.swift */,
+				69A80FF52F4FF3C2442726B5 /* JITSession.swift */,
+				A481D9B96DE7C0E1B371BA95 /* ProcessInfo+TXM.swift */,
+				C288585563B0295E4DC328A8 /* ScriptRunner.swift */,
+				F9ABB29A746E04B5962E66D4 /* StikJIT.swift */,
+				86414734398E0E3F9EBC02E4 /* StikJITError.swift */,
+				8FAC13B9C685251C9D2A2EB2 /* SynchronousDDIDownloader.swift */,
+				7F74E93323F37345E889E9AB /* Helper legacy.js */,
+				F2EADEB2AD316F4D50630712 /* Helper universal.js */,
+				AA59629C5E685A583820E955 /* Helper Info.plist */,
+				7EFA6B1E96A71BE18887454D /* Helper LCJITHelper-Bridging-Header.h */,
+				75CF52838063047EA410CBF8 /* BuiltInJITNotices */,
+			);
+			name = LCJITHelper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -679,6 +860,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				043CFEDA041D4A1CA663D099 /* LCJITHelper dependency */,
 				174140FA2D9C1EDA00F3F928 /* PBXTargetDependency */,
 				174140FE2D9C1EDA00F3F928 /* PBXTargetDependency */,
 				174141002D9C1EDA00F3F928 /* PBXTargetDependency */,
@@ -760,6 +942,17 @@
 			productName = LiveContainerShared;
 			productReference = E1292BD62DCA3B660065E12D /* LiveContainerShared.framework */;
 			productType = "com.apple.product-type.framework";
+		};
+		F5BC205E079435EB53F1F30D /* LCJITHelper Target */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E862A613732EF479580CBEE;
+			buildPhases = (CC7C3A7C677D2FD0FAFC4601,AF1E2DC7E628C18720CDB729,7BBC4486628897007AB2A925);
+			buildRules = ();
+			dependencies = ();
+			name = LCJITHelper;
+			productName = LCJITHelper;
+			productReference = 27692A6D136EB83526D6301B /* LCJITHelper.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -858,6 +1051,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				F5BC205E079435EB53F1F30D /* LCJITHelper */,
 				17DCE99C2C7067EC00731D42 /* LiveContainer */,
 				17413FB42D9C0BAE00F3F928 /* LiveContainerSwiftUI */,
 				174140392D9C0D0000F3F928 /* TweakLoader */,
@@ -898,6 +1092,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07DFF314CE5976055F8A77CB /* BuiltInJITNotices in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,6 +1114,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7BBC4486628897007AB2A925 /* Helper Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EA675B8A45D75088C9A9480 /* Helper legacy.js in Resources */,
+				83589823551CB25D06809A70 /* Helper universal.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1014,12 +1218,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99B7F99D00412CED3CAA1922 /* LCBuiltInJIT.m in Sources */,
 				E1292C072DCA434C0065E12D /* dyld_bypass_validation.m in Sources */,
 				E1292C092DCA43510065E12D /* Localization.m in Sources */,
 				E16D95742E1CD2980068EB63 /* LCMachOUtils.m in Sources */,
 				E1292C082DCA434F0065E12D /* LCSharedUtils.m in Sources */,
 				E1292C0B2DCA43560065E12D /* LCBootstrap.m in Sources */,
 				E1292C0A2DCA43540065E12D /* utils.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC7C3A7C677D2FD0FAFC4601 /* Helper Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9872CDF775AE919451B4BB29 /* LCJITHelper.swift in Helper Sources */,
+				C2B75B1009A427C42C5F8B87 /* BundledScript.swift in Helper Sources */,
+				FF606806D12AC460D4C584D9 /* DDISession.swift in Helper Sources */,
+				629C28110FB2A952EA049DA9 /* DeveloperDiskImageService.swift in Helper Sources */,
+				2558235CF7592756CBCEB226 /* EndpointProbe.swift in Helper Sources */,
+				89B62DE335198F20395BEA06 /* IdeviceFFI.swift in Helper Sources */,
+				7E5893405EA255F49A604F80 /* JITSession.swift in Helper Sources */,
+				0A1D1DCC3EC559B84BD8E7C6 /* ProcessInfo+TXM.swift in Helper Sources */,
+				1C397107BB06B025F1F2975C /* ScriptRunner.swift in Helper Sources */,
+				C70DFFE3F083DC40B99B7416 /* StikJIT.swift in Helper Sources */,
+				6115A8423842960569C0C35D /* StikJITError.swift in Helper Sources */,
+				139556473CC59457F8BDF918 /* SynchronousDDIDownloader.swift in Helper Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1070,6 +1294,11 @@
 			isa = PBXTargetDependency;
 			target = E1292BD52DCA3B660065E12D /* LiveContainerShared */;
 			targetProxy = E1292BE92DCA3B670065E12D /* PBXContainerItemProxy */;
+		};
+		043CFEDA041D4A1CA663D099 /* Helper Dependency */ = {
+			isa = PBXTargetDependency;
+			target = F5BC205E079435EB53F1F30D;
+			targetProxy = 76F7E552D93E5E3BC7B3E287;
 		};
 /* End PBXTargetDependency section */
 
@@ -1963,6 +2192,28 @@
 			};
 			name = Release;
 		};
+		9EBB08239A8B1AEFA42B299B /* Helper Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 17B0F8452DE16FE4008110EA;
+			baseConfigurationReferenceRelativePath = LCJITHelper.xcconfig;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				GCC_OPTIMIZATION_LEVEL = 0;
+			};
+			name = Debug;
+		};
+		DABDD1FBD1246455E93E3A14 /* Helper Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 17B0F8452DE16FE4008110EA;
+			baseConfigurationReferenceRelativePath = LCJITHelper.xcconfig;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				GCC_OPTIMIZATION_LEVEL = s;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2062,6 +2313,12 @@
 				E1292BED2DCA3B670065E12D /* Debug */,
 				E1292BEE2DCA3B670065E12D /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E862A613732EF479580CBEE /* Helper Configuration List */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (9EBB08239A8B1AEFA42B299B,DABDD1FBD1246455E93E3A14);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};

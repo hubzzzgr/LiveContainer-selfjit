@@ -1,6 +1,7 @@
 #import "FoundationPrivate.h"
 #import "LCMachOUtils.h"
 #import "LCSharedUtils.h"
+#import "LCBuiltInJIT.h"
 #import "UIKitPrivate.h"
 #import "utils.h"
 
@@ -298,6 +299,12 @@ static NSString* invokeAppMain(NSString *selectedApp, NSString *selectedContaine
     if(!guestAppInfo) {
         return @"App bundle not found! Unable to read LCAppInfo.plist.";
     }
+
+    // Attach to this replacement host / LiveProcess before dyld changes or guest initializers.
+    NSDictionary *jitPayload = isLiveProcess ? [NSClassFromString(@"LiveProcessHandler") takeBuiltInJITPayload] : nil;
+    NSString *jitError = [LCBuiltInJIT waitForGuest:selectedApp container:selectedContainer info:guestAppInfo liveProcessPayload:jitPayload];
+    jitPayload = nil;
+    if (jitError) return jitError;
     
     if([guestAppInfo[@"doUseLCBundleId"] boolValue] ) {
         NSMutableDictionary* infoPlist = [NSMutableDictionary dictionaryWithContentsOfFile:[NSString stringWithFormat:@"%@/Info.plist", bundlePath]];

@@ -1,0 +1,24 @@
+#include "Global.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = $(LIVECONTAINER_BUNDLE_IDENTIFIER).JITHelper
+PRODUCT_NAME = LCJITHelper
+IPHONEOS_DEPLOYMENT_TARGET = 26.0
+SWIFT_VERSION = 5.0
+SWIFT_STRICT_CONCURRENCY = minimal
+SWIFT_OBJC_BRIDGING_HEADER = LCJITHelper/LCJITHelper-Bridging-Header.h
+SWIFT_INCLUDE_PATHS = $(inherited) "$(SRCROOT)/ThirdParty/StikJIT/idevice" "$(SRCROOT)/LCJITHelper/IOKitShim"
+HEADER_SEARCH_PATHS = $(inherited) "$(SRCROOT)/ThirdParty/StikJIT/idevice"
+LIBRARY_SEARCH_PATHS = $(inherited) "$(SRCROOT)/ThirdParty/StikJIT/idevice"
+OTHER_LDFLAGS[sdk=iphoneos*] = $(inherited) -Wl,-hidden-lidevice_ffi -framework JavaScriptCore -framework Network -framework Security -framework CFNetwork -framework SystemConfiguration -framework IOKit
+// Keep simulator builds usable without linking the device-only Rust archive.
+EXCLUDED_SOURCE_FILE_NAMES[sdk=iphonesimulator*] = BundledScript.swift DDISession.swift DeveloperDiskImageService.swift EndpointProbe.swift IdeviceFFI.swift JITSession.swift ProcessInfo+TXM.swift ScriptRunner.swift StikJIT.swift StikJITError.swift SynchronousDDIDownloader.swift
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks @executable_path/../../Frameworks
+DEAD_CODE_STRIPPING = YES
+SKIP_INSTALL = YES
+APPLICATION_EXTENSION_API_ONLY = YES
+INFOPLIST_FILE = LCJITHelper/Info.plist
+GENERATE_INFOPLIST_FILE = NO
+CODE_SIGN_STYLE = Automatic
+TARGETED_DEVICE_FAMILY = 1,2
+SUPPORTED_PLATFORMS = iphoneos iphonesimulator
+SUPPORTS_MACCATALYST = NO

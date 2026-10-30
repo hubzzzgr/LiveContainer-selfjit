@@ -1,0 +1,4 @@
+module StikJITIOKit [system] {
+    header "../../LiveContainer/LCIOKit.h"
+    export *
+}

@@ -18,9 +18,11 @@ enum JITEnablerType : Int, CaseIterable, Identifiable {
     case SideStore = 4
     case StosDebug = 5
     case StosDebugLC = 6
+    case BuiltInStikJIT = 7
     
     var displayName: String {
         switch self {
+        case .BuiltInStikJIT: "Built-in StikJIT (Husk Self-JIT)"
         case .StikJIT: "StikDebug"
         case .StikJITLC: "StikDebug (Another LiveContainer/Multitask)"
         case .StosDebug: "StosDebug"
@@ -182,6 +184,11 @@ struct LCSettingsView: View {
                         }
                     } label: {
                         Text("lc.settings.jitEnabler".loc)
+                    }
+                    if JITEnabler == .BuiltInStikJIT {
+                        NavigationLink("Built-in StikJIT Setup") {
+                            LCBuiltInJITSetupView()
+                        }
                     }
 
                 } header: {

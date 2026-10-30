@@ -30,6 +30,14 @@ jobs:
         uses: actions/checkout@v6
         with:
           submodules: recursive
+      - name: Validate built-in JIT sources and product checks
+        run: |
+          python3 scripts/verify_builtin_jit.py
+          python3 -m unittest discover -s scripts -p 'test_*.py'
+      - name: Test native pairing and launch intent contracts
+        run: |
+          xcrun clang -fobjc-arc -fblocks -fmodules -framework Foundation -framework Security tests/BuiltInJITContracts.m -o "$RUNNER_TEMP/lc-jit-contract-tests"
+          "$RUNNER_TEMP/lc-jit-contract-tests"
       - name: Set Scheme
         id: scheme
         run: |
@@ -59,6 +67,8 @@ jobs:
           filetype_parameter: ${{ steps.filetype_parameter.outputs.filetype_parameter }}
           file_to_build: ${{ steps.file_to_build.outputs.file_to_build }}
         run: xcodebuild archive -archivePath "$archive_path" -scheme "$scheme" -"$filetype_parameter" "$file_to_build" -sdk iphoneos -arch arm64 -configuration Release | xcpretty && exit ${PIPESTATUS[0]}
+      - name: Validate archived JIT helper
+        run: python3 scripts/verify_builtin_jit.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
       - name: Tar Build Artifact
         run: tar -cvf "$archive_path.xcarchive.tar" "$archive_path.xcarchive"
       - name: Upload a Build Artifact

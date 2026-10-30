@@ -3,7 +3,7 @@
 @import UIKit;
 @import UniformTypeIdentifiers;
 @import Security;
-#import <IOKit/IOKitLib.h>
+#import "../../LiveContainer/LCIOKit.h"
 
 #import "LCUtils.h"
 #import "../../LiveContainer/LCSharedUtils.h"

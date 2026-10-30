@@ -7,3 +7,9 @@ packages/
 xcuserdata
 Resources/Frameworks/OpenSSL.framework
 apps_nightly.json
+__pycache__/
+# Remote Pairing files contain private device credentials. Import them in the app.
+*.mobiledevicepairing
+pairingFile.plist
+pairing.plist
+pairing-*.plist

@@ -1,0 +1,35 @@
+{
+  "project": "https://github.com/StikDebug/StikJIT",
+  "version": "1.9.0",
+  "revision": "32287268fa5824f9edce4cb359f5833ce0cf7b00",
+  "source_archive_sha256": "a1928920166ef981f65baf16bf605f54afa0a2c681c7b8cc0a8b4ad7199002ca",
+  "local_changes": {
+    "Sources/ScriptRunner.swift": "Typed didAttach callback after successful vAttach for the requested PID; throw a JavaScript exception on debugger I/O failure to end orphaned stop loops."
+  },
+  "files": {
+    ".gitattributes": "1a1dbe176bc233b499d35a57db7513f2941c99ab9759f177830c9149be99005b",
+    "idevice/idevice.h": "696286794e8cf1c18a91d4dab5046cef4d9bae352f5e7a1ad33fbc0ba30d7ab4",
+    "idevice/libidevice_ffi.a": "4db23fe1d342927b9480bb9a8577f219994365621dc28aa0018e23ea1990ecc8",
+    "idevice/module.modulemap": "d98e25796e1135d892d81e6922a61e78e82b3d6c33322112e9eca1e089c7a300",
+    "INTEGRATION.md": "e3bef9cd4c9d762631f2bacb35949d30f075bab16edb838ac8bb3cc054704839",
+    "iokit/module.modulemap": "be5beb977faf366c6bd872b5231f1e275f753536acfbc84d68e7056576130348",
+    "iokit/StikJITIOKit.h": "89cfe4100638eac82e3f3a2cd4d5036ff9ce18711e9cdf70e613c8c2e4b0e48a",
+    "LICENSE": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+    "project.yml": "c0f0aee7ee6608445c258a74762c593fce950f12790a4d0b63f46b4646ff70db",
+    "README.md": "38e607d8fd08141944b10c1b4da7bdd70ad558b0f0313072cebeffe25d267917",
+    "Resources/legacy.js": "787df4678ca17fd100a1d002203bfac8771fae062175aa510da8d6af9f8167ec",
+    "Resources/universal.js": "753e7bba37913cd6c4e68b399735a8c9a7b8d475ba04d8b36ce1afd6678c9fbc",
+    "Sources/BundledScript.swift": "23804f426c73bacce8faeb9be2fd8355331ed4cfe4b1794fe22a79067f4cd341",
+    "Sources/DDISession.swift": "35c6eabcbb7d563a6878a3b703c1dc3792067650c91c411149b52a18fe5fd5f9",
+    "Sources/DeveloperDiskImageService.swift": "8bd5624ee1055abef3840620bf53d5e91f8a3c5d0aab8c8b9cba583c95b92bda",
+    "Sources/EndpointProbe.swift": "2e64170c2b8ac9da8a1d3adc3146c13ffadc29777edd45ccd62d9a49886bf87f",
+    "Sources/IdeviceFFI.swift": "5f71b965b6f4bc1dd1d9f010ed3d2d51a9f353391ed7157f6bddfb9ddd40c6d8",
+    "Sources/JITSession.swift": "f6c2051e75ab9b36aa21f0f3d78e48e7505120114de3fbed2a9f6fc699ce4301",
+    "Sources/ProcessInfo+TXM.swift": "8f7d7b752a3d5608e6e9198c734b3f6cdc36aa69b64737436c160341e00d8fa2",
+    "Sources/ScriptRunner.swift": "1e6cf412f06d0c1369a253d8cd10fc1e398115f207123d4168d0dbf15238a677",
+    "Sources/StikJIT.swift": "2726284b3dd8d337572356c6eec31b2ef842fcbe90700e0ed06298afe5c77c05",
+    "Sources/StikJITError.swift": "352dbdb542fdbbadfb021c31609c7fd18f6ff5d696369a71748063c05f773950",
+    "Sources/SynchronousDDIDownloader.swift": "21dc096796a052ba7679edb5e61c81f15e24e8d81f80973cfa2f43cabfb84d44"
+  },
+  "text_hash_normalization": "LF; binary archives are hashed verbatim"
+}
