@@ -25,9 +25,14 @@
 - (void)_hostWillResignActiveNote:(NSNotification *)note;
 @end
 
+// macOS publishes these APIs; iOS SDKs still require private declarations.
+#if __has_include(<Security/SecTask.h>)
+#import <Security/SecTask.h>
+#else
 void* SecTaskCreateFromSelf(CFAllocatorRef allocator);
-NSString *SecTaskCopyTeamIdentifier(void *task, NSError **error);
 CFTypeRef SecTaskCopyValueForEntitlement(void *task, CFStringRef key, CFErrorRef *error);
+#endif
+NSString *SecTaskCopyTeamIdentifier(void *task, NSError **error);
 
 
 @interface _CFXPreferences2 : NSObject

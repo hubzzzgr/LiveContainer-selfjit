@@ -11,9 +11,8 @@
 #import "../LiveContainer/utils.h"
 #import "../LiveContainer/Tweaks/Tweaks.h"
 #import "../SideStoreSupport/XPCServer.h"
+#import "LiveProcessHandler.h"
 
-@interface LiveProcessHandler : NSObject<NSExtensionRequestHandling>
-@end
 @implementation LiveProcessHandler
 static NSExtensionContext *extensionContext;
 static NSDictionary *retrievedAppInfo;

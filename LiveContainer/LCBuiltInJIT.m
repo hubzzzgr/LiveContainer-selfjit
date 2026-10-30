@@ -2,6 +2,7 @@
 #import "LCSharedUtils.h"
 #import "FoundationPrivate.h"
 #import "utils.h"
+#import "../LiveProcess/LiveProcessHandler.h"
 #import <dlfcn.h>
 #import <ifaddrs.h>
 #import <netinet/in.h>

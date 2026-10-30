@@ -4,6 +4,7 @@
 #import "LCBuiltInJIT.h"
 #import "UIKitPrivate.h"
 #import "utils.h"
+#import "../LiveProcess/LiveProcessHandler.h"
 
 #include <mach/mach.h>
 #include <mach-o/dyld.h>
