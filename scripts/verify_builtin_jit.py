@@ -139,7 +139,7 @@ def verify_app(app, inspect_macho=True):
                     (p.name.startswith('pairing-') and p.suffix == '.plist') or p.suffix == '.mobiledevicepairing'
                     for p in app.rglob('*')), 'Unexpected private pairing data in the product')
     if inspect_macho and sys.platform == 'darwin':
-        subprocess.run(['lipo', '-verify_arch', 'arm64', str(binary)], check=True, capture_output=True)
+        subprocess.run(['lipo', str(binary), '-verify_arch', 'arm64'], check=True)
         for executable in [app / host['CFBundleExecutable'], app / 'Frameworks/LiveContainerShared.framework/LiveContainerShared']:
             linked = subprocess.check_output(['otool', '-L', str(executable)], text=True)
             require('StikJIT.framework' not in linked and 'libidevice' not in linked, 'Host strongly links the debugger')

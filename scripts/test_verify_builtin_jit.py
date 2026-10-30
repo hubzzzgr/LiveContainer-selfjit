@@ -1,4 +1,6 @@
 import plistlib
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -31,6 +33,20 @@ class ProductChecks(unittest.TestCase):
 
     def test_complete_product(self):
         verify_app(self.app, inspect_macho=False)
+
+    @unittest.skipUnless(sys.platform == 'darwin', 'Requires Apple Mach-O tools')
+    def test_complete_product_with_macho_tools(self):
+        binary = self.helper / 'LCJITHelper'
+        subprocess.run(['xcrun', 'clang', '-arch', 'arm64', '-x', 'c', '-', '-o', str(binary)],
+                       input='int main(void) { return 0; }', text=True, check=True)
+        host_info = plistlib.loads((self.app / 'Info.plist').read_bytes())
+        host_info['CFBundleExecutable'] = 'LiveContainer'
+        (self.app / 'Info.plist').write_bytes(plistlib.dumps(host_info))
+        shared = self.app / 'Frameworks/LiveContainerShared.framework/LiveContainerShared'
+        shared.parent.mkdir(parents=True)
+        for executable in [self.app / 'LiveContainer', shared]:
+            executable.write_bytes(binary.read_bytes())
+        verify_app(self.app)
 
     def test_missing_executable(self):
         (self.helper / 'LCJITHelper').unlink()
