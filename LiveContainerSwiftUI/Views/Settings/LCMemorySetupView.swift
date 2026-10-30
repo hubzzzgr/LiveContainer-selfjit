@@ -38,7 +38,7 @@ struct LCMemorySetupView: View {
             Section {
                 if !model.signedIn {
                     TextField("Apple Account", text: $model.email)
-                        .textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .textInputAutocapitalization(.never).disableAutocorrection(true)
                         .keyboardType(.emailAddress).disabled(model.busy)
                     SecureField("Password", text: $model.password).disabled(model.busy)
                     if model.needsVerification {
@@ -69,9 +69,9 @@ struct LCMemorySetupView: View {
 
             Section {
                 TextField("Anisette v3 Server", text: $server)
-                    .textInputAutocapitalization(.never).autocorrectionDisabled()
+                    .textInputAutocapitalization(.never).disableAutocorrection(true)
                     .keyboardType(.URL).disabled(model.busy || model.signedIn)
-                Link("GetMoreRam — Inspiration", destination: URL(string: "https://github.com/hugeBlack/GetMoreRam")!)
+                Link("GetMoreRam â€” Inspiration", destination: URL(string: "https://github.com/hugeBlack/GetMoreRam")!)
             } header: {
                 Text("Setup")
             }
