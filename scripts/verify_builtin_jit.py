@@ -103,7 +103,10 @@ def verify_sources(root=ROOT):
         require(not any('StikJIT' in path or 'idevice_ffi' in path for path in paths), f'Debugger linked into target: {name}')
     settings = (root / 'xcconfigs/LCJITHelper.xcconfig').read_text()
     require('-hidden-lidevice_ffi' in settings, 'Missing helper FFI linkage')
-    require('CODE_SIGN_ENTITLEMENTS' not in settings, 'Unexpected helper entitlements')
+    require('CODE_SIGN_ENTITLEMENTS = LCJITHelper/LCJITHelper.entitlements' in settings,
+            'Missing helper signing configuration')
+    require(plistlib.loads((root / 'LCJITHelper/LCJITHelper.entitlements').read_bytes()) == {},
+            'Unexpected helper entitlements')
     enum = (root / 'LiveContainerSwiftUI/Views/Settings/LCSettingsView.swift').read_text()
     for name, raw in [('SideJITServer', 0), ('StikJIT', 1), ('JITStreamerEBLegacy', 2), ('StikJITLC', 3),
                       ('SideStore', 4), ('StosDebug', 5), ('StosDebugLC', 6), ('BuiltInStikJIT', 7)]:

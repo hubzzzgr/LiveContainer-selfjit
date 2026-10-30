@@ -19,6 +19,9 @@ APPLICATION_EXTENSION_API_ONLY = YES
 INFOPLIST_FILE = LCJITHelper/Info.plist
 GENERATE_INFOPLIST_FILE = NO
 CODE_SIGN_STYLE = Automatic
+// Match the host's ad hoc signing fallback in certificate-free Release archives.
+// The empty entitlement file grants the helper no additional capabilities.
+CODE_SIGN_ENTITLEMENTS = LCJITHelper/LCJITHelper.entitlements
 TARGETED_DEVICE_FAMILY = 1,2
 SUPPORTED_PLATFORMS = iphoneos iphonesimulator
 SUPPORTS_MACCATALYST = NO
