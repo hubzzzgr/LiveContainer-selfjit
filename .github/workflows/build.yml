@@ -33,6 +33,7 @@ jobs:
       - name: Validate built-in JIT sources and product checks
         run: |
           python3 scripts/verify_builtin_jit.py
+          python3 scripts/verify_memory_entitlements.py
           python3 -m unittest discover -s scripts -p 'test_*.py'
       - name: Test native pairing and launch intent contracts
         run: |
@@ -76,6 +77,8 @@ jobs:
           exit "$build_status"
       - name: Validate archived JIT helper
         run: python3 scripts/verify_builtin_jit.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
+      - name: Validate archived memory entitlements
+        run: python3 scripts/verify_memory_entitlements.py --app "$archive_path.xcarchive/Products/Applications/LiveContainer.app"
       - name: Tar Build Artifact
         run: tar -cvf "$archive_path.xcarchive.tar" "$archive_path.xcarchive"
       - name: Upload a Build Artifact

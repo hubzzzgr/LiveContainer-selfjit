@@ -8,6 +8,7 @@ mv "$archive_path.xcarchive/Products/Applications" Payload
 
 # Fail before packaging if the embedded self-JIT helper or its notices are missing.
 python3 scripts/verify_builtin_jit.py --app Payload/LiveContainer.app || exit 1
+python3 scripts/verify_memory_entitlements.py --app Payload/LiveContainer.app || exit 1
 
 # temporarily move sidestore support framrwork to tmp before zip
 mkdir tmp
@@ -80,3 +81,4 @@ zip -r "$scheme+SideStore.ipa" "Payload" -x "._*" -x ".DS_Store" -x "__MACOSX"
 
 # Both distributions must preserve the helper after the SideStore transformation.
 python3 scripts/verify_builtin_jit.py --ipa "$scheme.ipa" --ipa "$scheme+SideStore.ipa" || exit 1
+python3 scripts/verify_memory_entitlements.py --ipa "$scheme.ipa" --ipa "$scheme+SideStore.ipa" || exit 1
