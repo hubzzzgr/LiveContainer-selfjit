@@ -172,11 +172,13 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                                     .font(.system(.title2).bold())
                                 Spacer()
                             }
-                            if sharedModel.isHiddenAppUnlocked {
-                                organizedApps(filteredHiddenApps, isHidden: true)
-                            } else {
-                                ForEach(filteredHiddenApps, id: \.self) { _ in
-                                    LCAppSkeletonBanner()
+                            Group {
+                                if sharedModel.isHiddenAppUnlocked {
+                                    organizedApps(filteredHiddenApps, isHidden: true)
+                                } else {
+                                    ForEach(filteredHiddenApps, id: \.self) { _ in
+                                        LCAppSkeletonBanner()
+                                    }
                                 }
                             }
                             .animation(.easeInOut, value: sharedModel.isHiddenAppUnlocked)
