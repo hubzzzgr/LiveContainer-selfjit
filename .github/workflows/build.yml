@@ -38,6 +38,10 @@ jobs:
         run: |
           xcrun clang -fobjc-arc -fblocks -fmodules -framework Foundation -framework Security tests/BuiltInJITContracts.m -o "$RUNNER_TEMP/lc-jit-contract-tests"
           "$RUNNER_TEMP/lc-jit-contract-tests"
+      - name: Test guest app folders and favorites
+        run: |
+          xcrun swiftc LiveContainerSwiftUI/Views/AppList/Sorting/LCAppOrganization.swift tests/AppOrganizationTests.swift -o "$RUNNER_TEMP/lc-app-organization-tests"
+          "$RUNNER_TEMP/lc-app-organization-tests"
       - name: Set Scheme
         id: scheme
         run: |
@@ -87,17 +91,21 @@ jobs:
         run: |
           sh .github/build_github.sh
 
-      - name: Upload a Build Artifact
+      - name: Upload LiveContainer IPA directly
         uses: actions/upload-artifact@v7
         with:
           name: ${{ env.scheme }}.ipa
           path: ${{ env.scheme }}.ipa
+          archive: false
+          if-no-files-found: error
       
       - name: Upload LiveContainer+SideStore
         uses: actions/upload-artifact@v7
         with:
           name: ${{ env.scheme }}+SideStore.ipa
           path: ${{ env.scheme }}+SideStore.ipa
+          archive: false
+          if-no-files-found: error
 
   release__nightly:
     name: Nightly Release

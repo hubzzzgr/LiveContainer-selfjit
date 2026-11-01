@@ -74,6 +74,14 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
     @State private var helpPresent = false
     
     @State private var customSortViewPresent = false
+
+    @State private var folderEditorPresented = false
+    @State private var editingFolderID: UUID?
+    @State private var folderName = ""
+    @State private var folderIsHidden = false
+    @State private var appToFile: LCAppModel?
+    @State private var folderToDelete: LCAppFolder?
+    @State private var deleteFolderPresented = false
     
     @EnvironmentObject private var sharedModel : SharedModel
     @EnvironmentObject private var sharedAppSortManager : LCAppSortManager
@@ -131,12 +139,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                 })
                 .hidden()
                 
-                LazyVStack {
-                    ForEach(filteredApps, id: \.self) { app in
-                        LCAppBanner(appModel: app, delegate: self)
-                    }
-                    .transition(.scale)
-                }
+                organizedApps(filteredApps, isHidden: false)
                 .padding()
                 .animation(searchContext.isTyping ? nil : .easeInOut, value: filteredApps)
 
@@ -150,10 +153,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                                     Spacer()
                                 }
                                 
-                                ForEach(filteredHiddenApps, id: \.self) { app in
-                                    LCAppBanner(appModel: app, delegate: self)
-                                }
-                                .transition(.scale)
+                                organizedApps(filteredHiddenApps, isHidden: true)
                                 
                             }
                             .padding()
@@ -172,10 +172,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                                     .font(.system(.title2).bold())
                                 Spacer()
                             }
-                            ForEach(filteredHiddenApps, id: \.self) { app in
-                                if sharedModel.isHiddenAppUnlocked {
-                                    LCAppBanner(appModel: app, delegate: self)
-                                } else {
+                            if sharedModel.isHiddenAppUnlocked {
+                                organizedApps(filteredHiddenApps, isHidden: true)
+                            } else {
+                                ForEach(filteredHiddenApps, id: \.self) { _ in
                                     LCAppSkeletonBanner()
                                 }
                             }
@@ -259,6 +259,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
+                        Button("lc.appList.newFolder".loc, systemImage: "folder.badge.plus") {
+                            beginFolderEditing()
+                        }
+                        Divider()
                         Picker("Sort by", selection: $sharedAppSortManager.appSortType) {
                             ForEach(AppSortType.allCases, id: \.self) { sortType in
                                 Label(sortType.displayName, systemImage: sortType.systemImage)
@@ -286,6 +290,30 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .textFieldAlert(
+            isPresented: $folderEditorPresented,
+            title: (editingFolderID == nil ? "lc.appList.newFolder" : "lc.appList.renameFolder").loc,
+            text: $folderName,
+            placeholder: "lc.appList.folderName".loc,
+            action: { newName in
+                if let newName {
+                    folderName = newName
+                    saveFolder()
+                }
+            },
+            actionCancel: { _ in appToFile = nil }
+        )
+        .alert("lc.appList.deleteFolder".loc, isPresented: $deleteFolderPresented) {
+            Button("lc.common.cancel".loc, role: .cancel) { folderToDelete = nil }
+            Button("lc.common.delete".loc, role: .destructive) {
+                if let folder = folderToDelete {
+                    sharedAppSortManager.organization.deleteFolder(folder.id)
+                }
+                folderToDelete = nil
+            }
+        } message: {
+            Text("lc.appList.deleteFolderMessage".loc)
+        }
         .alert("lc.common.error".loc, isPresented: $errorShow){
             Button("lc.common.ok".loc, action: {
             })
@@ -969,8 +997,100 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         
     }
     
+    @ViewBuilder
+    private func organizedApps(_ apps: [LCAppModel], isHidden: Bool) -> some View {
+        LazyVStack(spacing: 8) {
+            ForEach(apps.filter { sharedAppSortManager.folderID(for: $0) == nil }, id: \.self) { app in
+                LCAppBanner(appModel: app, delegate: self)
+            }
+            ForEach(sharedAppSortManager.organization.folders.filter { $0.isHidden == isHidden }) { folder in
+                let folderApps = apps.filter { sharedAppSortManager.folderID(for: $0) == folder.id }
+                let isSearching = !searchContext.debouncedQuery.isEmpty
+                if !isSearching || !folderApps.isEmpty {
+                    VStack(spacing: 8) {
+                        HStack {
+                            Button {
+                                if let index = sharedAppSortManager.organization.folders.firstIndex(where: { $0.id == folder.id }) {
+                                    withAnimation(.easeInOut) {
+                                        sharedAppSortManager.organization.folders[index].isExpanded.toggle()
+                                    }
+                                }
+                            } label: {
+                                HStack {
+                                    Image(systemName: folder.isExpanded || isSearching ? "chevron.down" : "chevron.right")
+                                        .font(.caption.bold())
+                                        .frame(width: 12)
+                                    Label(folder.name, systemImage: "folder.fill")
+                                        .font(.headline)
+                                    Spacer()
+                                    Text("\(folderApps.count)")
+                                        .foregroundStyle(.secondary)
+                                }
+                                .contentShape(Rectangle())
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityValue((folder.isExpanded || isSearching ? "lc.appList.folderExpanded" : "lc.appList.folderCollapsed").loc)
+
+                            Menu {
+                                Button("lc.appList.renameFolder".loc, systemImage: "pencil") {
+                                    beginFolderEditing(folder)
+                                }
+                                Button(role: .destructive) {
+                                    folderToDelete = folder
+                                    deleteFolderPresented = true
+                                } label: {
+                                    Label("lc.appList.deleteFolder".loc, systemImage: "trash")
+                                }
+                            } label: {
+                                Image(systemName: "ellipsis.circle")
+                                    .padding(8)
+                            }
+                            .accessibilityLabel("lc.appList.folderOptions".loc)
+                        }
+                        if folder.isExpanded || isSearching {
+                            ForEach(folderApps, id: \.self) { app in
+                                LCAppBanner(appModel: app, delegate: self)
+                            }
+                            if folderApps.isEmpty {
+                                Text("lc.appList.emptyFolder".loc)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.vertical, 8)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func beginFolderEditing(_ folder: LCAppFolder? = nil, app: LCAppModel? = nil) {
+        editingFolderID = folder?.id
+        folderName = folder?.name ?? ""
+        folderIsHidden = folder?.isHidden ?? app?.uiIsHidden ?? false
+        appToFile = app
+        folderEditorPresented = true
+    }
+
+    func createFolder(for app: LCAppModel) {
+        beginFolderEditing(app: app)
+    }
+
+    private func saveFolder() {
+        if let id = editingFolderID {
+            sharedAppSortManager.organization.renameFolder(id, to: folderName)
+        } else if let id = sharedAppSortManager.organization.createFolder(named: folderName, isHidden: folderIsHidden) {
+            if let app = appToFile {
+                sharedAppSortManager.moveApp(app, to: id)
+            }
+        }
+        appToFile = nil
+    }
+
     func removeApp(app: LCAppModel) {
         DispatchQueue.main.async {
+            sharedAppSortManager.removeOrganization(for: app)
             sharedModel.apps.removeAll { now in
                 return app == now
             }

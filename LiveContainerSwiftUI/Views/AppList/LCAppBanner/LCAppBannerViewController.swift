@@ -136,6 +136,40 @@ final class LCAppBannerViewController: UIViewController, UIContextMenuInteractio
         let appInfo = model.appInfo
         var menuChildren: [UIMenuElement] = []
 
+        let sortManager = LCAppSortManager.shared
+        let isFavorite = sortManager.isFavorite(model)
+        let favoriteAction = UIAction(
+            title: (isFavorite ? "lc.appList.removeFavorite" : "lc.appList.addFavorite").loc,
+            image: UIImage(systemName: isFavorite ? "star.slash" : "star")
+        ) { [weak self] _ in
+            sortManager.toggleFavorite(model)
+            self?.refreshView()
+        }
+        let currentFolderID = sortManager.folderID(for: model)
+        var folderActions: [UIMenuElement] = [UIAction(
+            title: "lc.appList.noFolder".loc,
+            image: UIImage(systemName: "tray"),
+            state: currentFolderID == nil ? .on : .off
+        ) { _ in
+            sortManager.moveApp(model, to: nil)
+        }]
+        for folder in sortManager.organization.folders where folder.isHidden == model.uiIsHidden {
+            folderActions.append(UIAction(
+                title: folder.name,
+                image: UIImage(systemName: "folder"),
+                state: currentFolderID == folder.id ? .on : .off
+            ) { _ in
+                sortManager.moveApp(model, to: folder.id)
+            })
+        }
+        folderActions.append(UIAction(title: "lc.appList.newFolder".loc, image: UIImage(systemName: "folder.badge.plus")) { [weak self] _ in
+            self?.delegate.createFolder(for: model)
+        })
+        menuChildren.append(UIMenu(options: .displayInline, children: [
+            favoriteAction,
+            UIMenu(title: "lc.appList.moveToFolder".loc, image: UIImage(systemName: "folder"), children: folderActions)
+        ]))
+
         // 1. Containers Picker (Equivalent to a Menu with single selection)
         if model.uiContainers.count > 1 {
             let containerActions = model.uiContainers.map { [weak self] container in

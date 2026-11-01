@@ -14,6 +14,7 @@ final class LCAppBannerRootView: UIView {
     private let visualBackgroundView = UIView()
     private let iconImageView = UIImageView()
     private let nameLabel = UILabel()
+    private let favoriteIcon = UIImageView(image: UIImage(systemName: "star.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 12)))
     private let versionLabel = UILabel()
     private let remarkLabel = UILabel()
     private let containerLabel = UILabel()
@@ -71,6 +72,10 @@ final class LCAppBannerRootView: UIView {
         nameStack.alignment = .center
         nameStack.spacing = 8
         nameStack.addArrangedSubview(nameLabel)
+        favoriteIcon.tintColor = .systemYellow
+        favoriteIcon.setContentCompressionResistancePriority(.required, for: .horizontal)
+        favoriteIcon.isAccessibilityElement = false
+        nameStack.addArrangedSubview(favoriteIcon)
         nameStack.addArrangedSubview(sharedBadge)
         nameStack.addArrangedSubview(jitBadge)
         nameStack.addArrangedSubview(bit32Badge)
@@ -139,6 +144,8 @@ final class LCAppBannerRootView: UIView {
         iconImageView.image = icon
         nameLabel.text = model.displayName
         nameLabel.textColor = .label
+        let isFavorite = LCAppSortManager.shared.isFavorite(model)
+        favoriteIcon.isHidden = !isFavorite
         versionLabel.text = "\(model.version) - \(model.bundleIdentifier)"
         versionLabel.textColor = textColor
         remarkLabel.text = model.uiRemark
@@ -167,6 +174,9 @@ final class LCAppBannerRootView: UIView {
         )
 
         var accessibilityParts = [model.displayName, "\(model.version) - \(model.bundleIdentifier)"]
+        if isFavorite {
+            accessibilityParts.append("lc.appList.favorite".loc)
+        }
         if !model.uiRemark.isEmpty {
             accessibilityParts.append(model.uiRemark)
         }

@@ -11,6 +11,7 @@ import UIKit
 
 protocol LCAppBannerDelegate {
     func removeApp(app: LCAppModel)
+    func createFolder(for app: LCAppModel)
     func installMdm(data: Data)
     func openNavigationView(view: AnyView)
     func promptForGeneratedIconStyle() async -> GeneratedIconStyle?
@@ -20,6 +21,7 @@ struct LCAppBanner: UIViewControllerRepresentable {
     var delegate: LCAppBannerDelegate
 
     @ObservedObject var model: LCAppModel
+    @ObservedObject private var sortManager = LCAppSortManager.shared
 
     @AppStorage("dynamicColors", store: LCUtils.appGroupUserDefault) private var dynamicColors = true
     @AppStorage("darkModeIcon", store: LCUtils.appGroupUserDefault) private var darkModeIcon = false

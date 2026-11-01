@@ -60,6 +60,41 @@ enum AppSortType: String, CaseIterable {
 class LCAppSortManager: ObservableObject {
     
     static var shared: LCAppSortManager = LCAppSortManager()
+
+    @Published var organization = LCAppOrganization.load(from: LCUtils.appGroupUserDefault) {
+        didSet {
+            organization.save(to: LCUtils.appGroupUserDefault)
+            sortedApps = getSortedApps(DataManager.shared.model.apps, sortType: appSortType, customSortOrder: customSortOrder)
+            if DataManager.shared.model.isHiddenAppUnlocked {
+                sortedHiddenApps = getSortedApps(DataManager.shared.model.hiddenApps, sortType: appSortType, customSortOrder: customSortOrder)
+            }
+        }
+    }
+
+    func isFavorite(_ app: LCAppModel) -> Bool {
+        guard let id = getUniqueIdentifier(for: app) else { return false }
+        return organization.favoriteApps.contains(id)
+    }
+
+    func toggleFavorite(_ app: LCAppModel) {
+        guard let id = getUniqueIdentifier(for: app) else { return }
+        organization.toggleFavorite(id)
+    }
+
+    func folderID(for app: LCAppModel) -> UUID? {
+        guard let id = getUniqueIdentifier(for: app) else { return nil }
+        return organization.folderID(for: id, isHidden: app.uiIsHidden)
+    }
+
+    func moveApp(_ app: LCAppModel, to folderID: UUID?) {
+        guard let id = getUniqueIdentifier(for: app) else { return }
+        organization.moveApp(id, to: folderID, isHidden: app.uiIsHidden)
+    }
+
+    func removeOrganization(for app: LCAppModel) {
+        guard let id = getUniqueIdentifier(for: app) else { return }
+        organization.removeApp(id)
+    }
     
     @AppStorage("LCAppSortType", store: LCUtils.appGroupUserDefault) var appSortType: AppSortType = .defaultOrder {
         didSet {
@@ -135,6 +170,11 @@ class LCAppSortManager: ObservableObject {
     }
     
     func getSortedApps(_ appList: [LCAppModel], sortType: AppSortType, customSortOrder: [String]) -> [LCAppModel] {
+        let sorted = getBaseSortedApps(appList, sortType: sortType, customSortOrder: customSortOrder)
+        return organization.favoritesFirst(sorted) { getUniqueIdentifier(for: $0) }
+    }
+
+    private func getBaseSortedApps(_ appList: [LCAppModel], sortType: AppSortType, customSortOrder: [String]) -> [LCAppModel] {
         switch sortType {
         case .defaultOrder:
             return appList
