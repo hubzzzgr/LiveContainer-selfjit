@@ -2,7 +2,6 @@
 #import "LCMachOUtils.h"
 #import "LCSharedUtils.h"
 #import "LCBuiltInJIT.h"
-#import "LCMemoryDiagnostics.h"
 #import "UIKitPrivate.h"
 #import "utils.h"
 #import "../LiveProcess/LiveProcessHandler.h"
@@ -673,7 +672,6 @@ static void exceptionHandler(NSException *exception) {
 
 int LiveContainerMain(int argc, char *argv[]) {
     lcMainBundle = [NSBundle mainBundle];
-    [LCMemoryDiagnostics captureLaunchConfiguration:lcMainBundle];
     lcUserDefaults = NSUserDefaults.standardUserDefaults;
     
     lcSharedDefaults = [[NSUserDefaults alloc] initWithSuiteName: [LCSharedUtils appGroupID]];

@@ -84,7 +84,6 @@ struct LCSettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                LCIncreasedMemorySection()
                 if sharedModel.multiLCStatus != 2 {
                     Section{
                         if !certificateDataFound {
