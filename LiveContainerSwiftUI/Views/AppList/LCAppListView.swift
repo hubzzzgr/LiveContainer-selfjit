@@ -128,7 +128,7 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         _installOptions = State(initialValue: [])
     }
     
-    var body: some View {
+    private var appListNavigation: some View {
         NavigationView {
             ScrollView {
                 NavigationLink(
@@ -290,6 +290,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
+    }
+
+    private var appListFolderDialogs: some View {
+        appListNavigation
         .textFieldAlert(
             isPresented: $folderEditorPresented,
             title: (editingFolderID == nil ? "lc.appList.newFolder" : "lc.appList.renameFolder").loc,
@@ -314,6 +318,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
         } message: {
             Text("lc.appList.deleteFolderMessage".loc)
         }
+    }
+
+    private var appListInstallDialogs: some View {
+        appListFolderDialogs
         .alert("lc.common.error".loc, isPresented: $errorShow){
             Button("lc.common.ok".loc, action: {
             })
@@ -377,6 +385,10 @@ struct LCAppListView : View, LCAppBannerDelegate, LCAppModelDelegate {
                 generatedIconStyleSelector.close(result: nil)
             }
         }
+    }
+
+    var body: some View {
+        appListInstallDialogs
         .textFieldAlert(
             isPresented: $webViewUrlInput.show,
             title:  "lc.appList.enterUrlTip".loc,
